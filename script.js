@@ -78,6 +78,26 @@ function renderTasks(tasksToDisplay) {
   });
 }
 
+taskForm.addEventListener("submit", event => {
+  event.preventDefault();
+  const title = taskTitleInput.value.trim();
+  const description = taskDescriptionInput.value.trim();
+  const dueDate = taskDueDateInput.value;
+  const priority = taskPriorityInput.value;
+  {
+    tasks.push({
+      id: Date.now(),
+      title,
+      description,
+      dueDate,
+      priority,
+      completed: false
+    });
+    taskForm.reset();
+    taskDueDateInput.value = getToday();
+    applyFilters();
+  });
+
 function applyFilters() {
   const filteredTasks = getFilteredTasks();
   renderTasks(filteredTasks);
