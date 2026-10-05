@@ -210,12 +210,10 @@ function deleteTask(taskId) {
 
 
 function applyFilters() {
-  const filteredTasks = getFilteredTasks();
-
-  renderTasks(filteredTasks);
+  renderTasks(tasks);
 
   resultsCountElement.textContent =
-    filteredTasks.length === 1 ? "1 task" : `${filteredTasks.length} tasks`;
+    tasks.length === 1 ? "1 task" : `${tasks.length} tasks`;
 }
 
 // --------------------------------------------------

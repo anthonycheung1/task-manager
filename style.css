@@ -79,7 +79,7 @@ select {
    Summary and form
 -------------------------------------------------- */
 
-.sidebar section + section {
+.sidebar section+section {
   margin-top: 1rem;
 }
 
