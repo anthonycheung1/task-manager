@@ -197,3 +197,41 @@ select {
   background-color: #f8e2e2;
   color: #9a2929;
 }
+
+.form-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.secondary-button {
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #e8ebef;
+  cursor: pointer;
+}
+
+.task-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.task-actions button {
+  padding: 0.55rem 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.edit-button {
+  background-color: #e8eef5;
+  color: #1f4e79;
+}
+
+.delete-button {
+  background-color: #f8e2e2;
+  color: #9a2929;
+}

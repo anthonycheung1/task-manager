@@ -44,6 +44,7 @@ const taskDueDateInput = document.querySelector("#task-due-date");
 const taskPriorityInput = document.querySelector("#task-priority");
 const taskListContainer = document.querySelector("#task-list-container");
 const submitTaskButton = document.querySelector("#submit-task-button") || taskForm.querySelector("button[type=submit]");
+let editingTaskId = null;
 
 function formatDate(dateString) {
   const date = new Date(`${dateString}T00:00:00`);
@@ -73,7 +74,21 @@ function renderTasks(tasksToDisplay) {
     const dueDate = document.createElement("p");
     dueDate.className = "task-due-date";
     dueDate.textContent = `Due: ${formatDate(task.dueDate)}`;
+    const actions = document.createElement("div");
+    actions.className = "task-actions";
+    const editButton = document.createElement("button");
+    editButton.type = "button";
+    editButton.className = "edit-button";
+    editButton.textContent = "Edit";
+    editButton.addEventListener("click", () => editTask(task.id));
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className = "delete-button";
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", () => deleteTask(task.id));
+    actions.append(editButton, deleteButton);
     card.append(header, description, dueDate);
+    card.appendChild(actions);
     taskListContainer.appendChild(card);
   });
 }
@@ -84,7 +99,18 @@ taskForm.addEventListener("submit", event => {
   const description = taskDescriptionInput.value.trim();
   const dueDate = taskDueDateInput.value;
   const priority = taskPriorityInput.value;
-  {
+  if (editingTaskId !== null) {
+    const task = tasks.find(task => task.id === editingTaskId);
+    if (task) {
+      task.title = title;
+      task.description = description;
+      task.dueDate = dueDate;
+      task.priority = priority;
+    }
+    if (typeof showFeedback === "function") showFeedback("Task updated successfully.");
+    editingTaskId = null;
+    submitTaskButton.textContent = "Add Task";
+  } else {
     tasks.push({
       id: Date.now(),
       title,
@@ -93,10 +119,32 @@ taskForm.addEventListener("submit", event => {
       priority,
       completed: false
     });
-    taskForm.reset();
-    taskDueDateInput.value = getToday();
-    applyFilters();
-  });
+  }
+  taskForm.reset();
+  taskDueDateInput.value = getToday();
+  applyFilters();
+});
+
+function editTask(taskId) {
+  const task = tasks.find(task => task.id === taskId);
+  if (!task) return;
+  taskTitleInput.value = task.title;
+  taskDescriptionInput.value = task.description;
+  taskDueDateInput.value = task.dueDate;
+  taskPriorityInput.value = task.priority;
+  editingTaskId = taskId;
+  submitTaskButton.textContent = "Save Changes";
+  taskTitleInput.focus();
+  if (typeof showFeedback === "function") showFeedback("Editing task.");
+}
+
+function deleteTask(taskId) {
+  const task = tasks.find(task => task.id === taskId);
+  if (!task) return;
+  if (!confirm(`Delete "${task.title}"?`)) return;
+  tasks = tasks.filter(task => task.id !== taskId);
+  applyFilters();
+}
 
 function applyFilters() {
   const filteredTasks = getFilteredTasks();
