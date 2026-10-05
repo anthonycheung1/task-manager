@@ -13,41 +13,65 @@
     <div class="header-content">
       <p class="eyebrow">Productivity Dashboard</p>
       <h1>My Task Manager</h1>
-      <p class="header-description">Organise your tasks, track progress and stay on top of your deadlines.</p>
+      <p class="header-description">
+        Organise your tasks, track progress and stay on top of your deadlines.
+      </p>
     </div>
   </header>
-  <main class="main-content">
 
+  <main class="main-content">
     <div class="dashboard-layout">
       <aside class="sidebar">
         <section class="summary-section">
           <h2>Task Summary</h2>
           <div class="summary-cards">
-            <article class="summary-card"><span id="active-count">0</span><span>Active</span></article>
-            <article class="summary-card"><span id="completed-count">0</span><span>Completed</span></article>
-            <article class="summary-card"><span id="due-today-count">0</span><span>Due Today</span></article>
+            <article class="summary-card">
+              <span class="summary-number" id="active-count">0</span>
+              <span class="summary-label">Active</span>
+            </article>
+            <article class="summary-card">
+              <span class="summary-number" id="completed-count">0</span>
+              <span class="summary-label">Completed</span>
+            </article>
+            <article class="summary-card">
+              <span class="summary-number" id="due-today-count">0</span>
+              <span class="summary-label">Due Today</span>
+            </article>
           </div>
         </section>
+
         <section class="task-form-section">
           <h2>Add a Task</h2>
           <form id="task-form">
-            <div class="form-group"><label for="task-title">Task title</label><input type="text" id="task-title"
-                maxlength="100" placeholder="e.g. Finish JavaScript project"></div>
-            <div class="form-group"><label for="task-description">Description</label><textarea id="task-description"
-                maxlength="500" rows="4"></textarea></div>
-            <div class="form-group"><label for="task-due-date">Due date</label><input type="date" id="task-due-date">
+            <div class="form-group">
+              <label for="task-title">Task title</label>
+              <input type="text" id="task-title" maxlength="100" placeholder="e.g. Finish JavaScript project">
             </div>
-            <div class="form-group"><label for="task-priority">Priority</label><select id="task-priority">
+            <div class="form-group">
+              <label for="task-description">Description</label>
+              <textarea id="task-description" maxlength="500" rows="4"
+                placeholder="Add some details about the task..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="task-due-date">Due date</label>
+              <input type="date" id="task-due-date">
+            </div>
+            <div class="form-group">
+              <label for="task-priority">Priority</label>
+              <select id="task-priority">
                 <option value="low">Low</option>
                 <option value="medium" selected>Medium</option>
                 <option value="high">High</option>
-              </select></div>
-            <div class="form-buttons"><button type="submit" id="submit-task-button" class="primary-button">Add
-                Task</button><button type="button" id="cancel-task-button" class="secondary-button">Cancel</button>
+              </select>
+            </div>
+            <div class="form-buttons">
+              <button type="submit" id="submit-task-button" class="primary-button">Add Task</button>
+              <button type="button" id="cancel-task-button" class="secondary-button">Cancel</button>
             </div>
           </form>
         </section>
       </aside>
+
       <section class="task-content">
         <div class="task-content-header">
           <div>
@@ -55,25 +79,18 @@
             <p id="results-count" class="results-count"></p>
           </div>
         </div>
-        <section class="filters-section">
-          <h3>Filter Tasks</h3>
-          <div class="filter-group"><span class="filter-label">Status</span>
-            <div class="filter-buttons"><button type="button" class="filter-button active"
-                data-status-filter="all">All</button><button type="button" class="filter-button"
-                data-status-filter="active">Active</button><button type="button" class="filter-button"
-                data-status-filter="completed">Completed</button><button type="button" class="filter-button"
-                data-status-filter="due-today">Due Today</button></div>
-          </div>
-        </section>
+
         <section class="task-list-section">
           <div id="task-list-container"></div>
         </section>
       </section>
     </div>
   </main>
+
   <footer class="page-footer">
     <p>My Task Manager &copy; 2026</p>
   </footer>
+
   <script src="script.js"></script>
 </body>
 
