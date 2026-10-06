@@ -440,3 +440,59 @@ select:focus-visible {
   white-space: nowrap;
   border: 0;
 }
+
+
+/* --------------------------------------------------
+   Empty states and filter information
+-------------------------------------------------- */
+
+.empty-state {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #666666;
+}
+
+.empty-state h3 {
+  margin-bottom: 0.5rem;
+  color: #333333;
+}
+
+.active-filter-summary {
+  margin-top: 1rem;
+  color: #555555;
+  font-size: 0.9rem;
+}
+
+.clear-filters-button {
+  margin-top: 0.75rem;
+  border: none;
+  background: none;
+  color: #1f4e79;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.search-help,
+.field-description {
+  color: #777777;
+  font-size: 0.85rem;
+}
+
+.search-help {
+  margin-top: 0.35rem;
+}
+
+.task-due-date.due-today {
+  color: #8a5a00;
+  font-weight: bold;
+}
+
+.task-due-date.overdue-text {
+  color: #a12525;
+  font-weight: bold;
+}
+
+.task-card.overdue {
+  border-left-color: #b33a3a;
+}

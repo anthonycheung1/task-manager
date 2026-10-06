@@ -45,17 +45,18 @@
           <h2>Add a Task</h2>
           <form id="task-form">
             <div class="form-group">
-              <label for="task-title">Task title</label>
-              <input type="text" id="task-title" maxlength="100" placeholder="e.g. Finish JavaScript project">
+              <label for="task-title">Task title <span class="field-description">Required</span></label>
+              <input type="text" id="task-title" maxlength="100" required autocomplete="off"
+                placeholder="e.g. Finish JavaScript project">
             </div>
             <div class="form-group">
-              <label for="task-description">Description</label>
+              <label for="task-description">Description <span class="field-description">Optional</span></label>
               <textarea id="task-description" maxlength="500" rows="4"
                 placeholder="Add some details about the task..."></textarea>
             </div>
             <div class="form-group">
               <label for="task-due-date">Due date</label>
-              <input type="date" id="task-due-date">
+              <input type="date" id="task-due-date" required>
             </div>
             <div class="form-group">
               <label for="task-priority">Priority</label>
@@ -112,7 +113,11 @@
             <label for="task-search">Search tasks</label>
             <input type="search" id="task-search" aria-describedby="search-help"
               placeholder="Search by title or description...">
+            <p id="search-help" class="search-help">Search your task titles and descriptions.</p>
           </div>
+
+          <div id="active-filter-summary" class="active-filter-summary"></div>
+          <button type="button" id="clear-filters-button" class="clear-filters-button" hidden>Clear Filters</button>
 
         </section>
 

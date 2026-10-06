@@ -51,6 +51,8 @@ const completedCountElement = document.querySelector("#completed-count");
 const dueTodayCountElement = document.querySelector("#due-today-count");
 const userFeedback = document.querySelector("#user-feedback");
 const taskSearchInput = document.querySelector("#task-search");
+const clearFiltersButton = document.querySelector("#clear-filters-button");
+const activeFilterSummary = document.querySelector("#active-filter-summary");
 
 // --------------------------------------------------
 // Date helper
@@ -116,12 +118,34 @@ function resetForm() {
 function renderTasks(tasksToDisplay) {
   taskListContainer.replaceChildren();
 
+  if (tasks.length === 0) {
+    const emptyMessage = document.createElement("div");
+    emptyMessage.className = "empty-state";
+    emptyMessage.innerHTML = "<h3>No tasks yet</h3><p>Add your first task using the form.</p>";
+    taskListContainer.appendChild(emptyMessage);
+    return;
+  }
+
+  if (tasksToDisplay.length === 0) {
+    const emptyMessage = document.createElement("div");
+    emptyMessage.className = "empty-state";
+    emptyMessage.innerHTML = "<h3>No matching tasks</h3><p>Try changing your filters or search.</p>";
+    taskListContainer.appendChild(emptyMessage);
+    return;
+  }
+
   tasksToDisplay.forEach(task => {
     const taskCard = document.createElement("article");
     taskCard.className = "task-card";
 
     if (task.completed) {
       taskCard.classList.add("completed");
+    }
+
+    const isOverdue = task.dueDate < getToday() && !task.completed;
+
+    if (isOverdue) {
+      taskCard.classList.add("overdue");
     }
 
     const taskHeader = document.createElement("div");
@@ -143,6 +167,16 @@ function renderTasks(tasksToDisplay) {
     const dueDate = document.createElement("p");
     dueDate.className = "task-due-date";
     dueDate.textContent = `Due: ${formatDate(task.dueDate)}`;
+
+    if (task.dueDate === getToday() && !task.completed) {
+      dueDate.classList.add("due-today");
+      dueDate.appendChild(document.createTextNode(" • Due today"));
+    }
+
+    if (isOverdue) {
+      dueDate.classList.add("overdue-text");
+      dueDate.appendChild(document.createTextNode(" • Overdue"));
+    }
 
     const completionContainer = document.createElement("div");
     completionContainer.className = "completion-control";
@@ -364,12 +398,35 @@ taskSearchInput.addEventListener("input", () => {
 
 taskTitleInput.addEventListener("input", updateSubmitButton);
 
+function updateFilterSummary() {
+  const activeFilters = [];
+
+  if (currentStatusFilter !== "all") activeFilters.push(`Status: ${currentStatusFilter}`);
+  if (currentPriorityFilter !== "all") activeFilters.push(`Priority: ${currentPriorityFilter}`);
+  if (currentSearch !== "") activeFilters.push(`Search: "${currentSearch}"`);
+
+  activeFilterSummary.textContent = activeFilters.length > 0
+    ? `Active filters: ${activeFilters.join(" • ")}`
+    : "";
+
+  clearFiltersButton.hidden = activeFilters.length === 0;
+}
+
+clearFiltersButton.addEventListener("click", () => {
+  currentStatusFilter = "all";
+  currentPriorityFilter = "all";
+  currentSearch = "";
+  taskSearchInput.value = "";
+  applyFilters();
+});
+
 
 function applyFilters() {
   const filteredTasks = getFilteredTasks();
 
   updateSummary();
   updateFilterButtons();
+  updateFilterSummary();
   renderTasks(filteredTasks);
 
   resultsCountElement.textContent = filteredTasks.length === 1 ? "1 task" : `${filteredTasks.length} tasks`;
