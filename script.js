@@ -46,6 +46,9 @@ const taskListContainer = document.querySelector("#task-list-container");
 const submitTaskButton = document.querySelector("#submit-task-button");
 const cancelTaskButton = document.querySelector("#cancel-task-button");
 const resultsCountElement = document.querySelector("#results-count");
+const activeCountElement = document.querySelector("#active-count");
+const completedCountElement = document.querySelector("#completed-count");
+const dueTodayCountElement = document.querySelector("#due-today-count");
 
 // --------------------------------------------------
 // Date helper
@@ -83,6 +86,10 @@ function renderTasks(tasksToDisplay) {
     const taskCard = document.createElement("article");
     taskCard.className = "task-card";
 
+    if (task.completed) {
+      taskCard.classList.add("completed");
+    }
+
     const taskHeader = document.createElement("div");
     taskHeader.className = "task-header";
 
@@ -103,6 +110,22 @@ function renderTasks(tasksToDisplay) {
     dueDate.className = "task-due-date";
     dueDate.textContent = `Due: ${formatDate(task.dueDate)}`;
 
+    const completionContainer = document.createElement("div");
+    completionContainer.className = "completion-control";
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.completed;
+    checkbox.id = `task-${task.id}`;
+
+    const checkboxLabel = document.createElement("label");
+    checkboxLabel.htmlFor = checkbox.id;
+    checkboxLabel.textContent = task.completed ? "Mark as incomplete" : "Mark as complete";
+
+    checkbox.addEventListener("change", () => toggleTask(task.id));
+
+    completionContainer.append(checkbox, checkboxLabel);
+
     const actionButtons = document.createElement("div");
     actionButtons.className = "task-actions";
 
@@ -121,6 +144,7 @@ function renderTasks(tasksToDisplay) {
     actionButtons.append(editButton, deleteButton);
 
     taskCard.append(taskHeader, description, dueDate);
+    taskCard.appendChild(completionContainer);
     taskCard.appendChild(actionButtons);
 
     taskListContainer.appendChild(taskCard);
@@ -209,7 +233,30 @@ function deleteTask(taskId) {
 }
 
 
+function toggleTask(taskId) {
+  const task = tasks.find(item => item.id === taskId);
+
+  if (!task) {
+    return;
+  }
+
+  task.completed = !task.completed;
+  applyFilters();
+}
+
+function updateSummary() {
+  const activeTasks = tasks.filter(task => !task.completed);
+  const completedTasks = tasks.filter(task => task.completed);
+  const dueTodayTasks = tasks.filter(task => task.dueDate === getToday() && !task.completed);
+
+  activeCountElement.textContent = activeTasks.length;
+  completedCountElement.textContent = completedTasks.length;
+  dueTodayCountElement.textContent = dueTodayTasks.length;
+}
+
+
 function applyFilters() {
+  updateSummary();
   renderTasks(tasks);
 
   resultsCountElement.textContent =

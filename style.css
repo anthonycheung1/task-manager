@@ -237,3 +237,25 @@ select {
   background-color: #f8e2e2;
   color: #9a2929;
 }
+
+
+/* --------------------------------------------------
+   Completed tasks
+-------------------------------------------------- */
+
+.task-card.completed {
+  border-left-color: #5a8f68;
+  background-color: #f8fbf9;
+}
+
+.task-card.completed .task-header h3 {
+  text-decoration: line-through;
+  color: #666666;
+}
+
+.completion-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
