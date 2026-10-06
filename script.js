@@ -49,6 +49,7 @@ const resultsCountElement = document.querySelector("#results-count");
 const activeCountElement = document.querySelector("#active-count");
 const completedCountElement = document.querySelector("#completed-count");
 const dueTodayCountElement = document.querySelector("#due-today-count");
+const userFeedback = document.querySelector("#user-feedback");
 const taskSearchInput = document.querySelector("#task-search");
 
 // --------------------------------------------------
@@ -87,6 +88,25 @@ tasks = storedTasks ? JSON.parse(storedTasks) : defaultTasks;
 
 function saveTasks() {
   localStorage.setItem(tasksKey, JSON.stringify(tasks));
+}
+
+function showFeedback(message, type = "success") {
+  userFeedback.textContent = message;
+  userFeedback.className = `user-feedback ${type}`;
+}
+
+function updateSubmitButton() {
+  submitTaskButton.disabled = taskTitleInput.value.trim() === "";
+}
+
+function resetForm() {
+  taskForm.reset();
+  taskDueDateInput.value = getToday();
+  taskDueDateInput.min = getToday();
+  taskPriorityInput.value = "medium";
+  editingTaskId = null;
+  submitTaskButton.textContent = "Add Task";
+  updateSubmitButton();
 }
 
 // --------------------------------------------------
@@ -181,6 +201,16 @@ taskForm.addEventListener("submit", event => {
     return;
   }
 
+  if (dueDate === "") {
+    showFeedback("Please select a due date.", "error");
+    return;
+  }
+
+  if (dueDate < getToday()) {
+    showFeedback("Please select today or a future date.", "error");
+    return;
+  }
+
   if (editingTaskId !== null) {
     const task = tasks.find(item => item.id === editingTaskId);
 
@@ -191,6 +221,7 @@ taskForm.addEventListener("submit", event => {
       task.priority = priority;
     }
     saveTasks();
+    showFeedback("Task updated successfully.", "success");
 
   } else {
     const newTask = {
@@ -204,10 +235,10 @@ taskForm.addEventListener("submit", event => {
 
     tasks.push(newTask);
     saveTasks();
+    showFeedback("Task added successfully.", "success");
 
   }
-  taskForm.reset();
-  taskDueDateInput.value = getToday();
+  resetForm();
   applyFilters();
 });
 
@@ -331,6 +362,9 @@ taskSearchInput.addEventListener("input", () => {
 });
 
 
+taskTitleInput.addEventListener("input", updateSubmitButton);
+
+
 function applyFilters() {
   const filteredTasks = getFilteredTasks();
 
@@ -338,8 +372,7 @@ function applyFilters() {
   updateFilterButtons();
   renderTasks(filteredTasks);
 
-  resultsCountElement.textContent =
-    filteredTasks.length === 1 ? "1 task" : `${filteredTasks.length} tasks`;
+  resultsCountElement.textContent = filteredTasks.length === 1 ? "1 task" : `${filteredTasks.length} tasks`;
 }
 
 // --------------------------------------------------
@@ -347,4 +380,6 @@ function applyFilters() {
 // --------------------------------------------------
 
 taskDueDateInput.value = getToday();
+taskDueDateInput.min = getToday();
+updateSubmitButton();
 applyFilters();

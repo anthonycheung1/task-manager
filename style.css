@@ -329,3 +329,35 @@ select {
   border: 1px solid #bfc6ce;
   border-radius: 6px;
 }
+
+
+/* --------------------------------------------------
+   Feedback and validation
+-------------------------------------------------- */
+
+.user-feedback {
+  min-height: 0;
+  margin-bottom: 1rem;
+  padding: 0;
+  border-radius: 6px;
+}
+
+.user-feedback.success,
+.user-feedback.error {
+  padding: 0.75rem 1rem;
+}
+
+.user-feedback.success {
+  background-color: #e7f5ec;
+  color: #176b35;
+}
+
+.user-feedback.error {
+  background-color: #fdeaea;
+  color: #a12525;
+}
+
+.primary-button:disabled {
+  background-color: #aeb7c1;
+  cursor: not-allowed;
+}
