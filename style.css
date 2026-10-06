@@ -307,3 +307,25 @@ select {
   color: #666666;
   font-size: 0.9rem;
 }
+
+
+/* --------------------------------------------------
+   Search and filter refinements
+-------------------------------------------------- */
+
+.search-group {
+  margin-top: 1rem;
+}
+
+.search-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: bold;
+}
+
+.search-group input {
+  width: 100%;
+  padding: 0.65rem;
+  border: 1px solid #bfc6ce;
+  border-radius: 6px;
+}

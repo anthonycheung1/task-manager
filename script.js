@@ -49,6 +49,7 @@ const resultsCountElement = document.querySelector("#results-count");
 const activeCountElement = document.querySelector("#active-count");
 const completedCountElement = document.querySelector("#completed-count");
 const dueTodayCountElement = document.querySelector("#due-today-count");
+const taskSearchInput = document.querySelector("#task-search");
 
 // --------------------------------------------------
 // Date helper
@@ -76,6 +77,8 @@ function formatDate(dateString) {
 let editingTaskId = null;
 
 let currentStatusFilter = "all";
+let currentPriorityFilter = "all";
+let currentSearch = "";
 
 // --------------------------------------------------
 // Render tasks
@@ -261,9 +264,21 @@ function getFilteredTasks() {
     if (currentStatusFilter === "active" && task.completed) return false;
     if (currentStatusFilter === "completed" && !task.completed) return false;
     if (currentStatusFilter === "due-today" && (task.dueDate !== getToday() || task.completed)) return false;
+
+    if (currentPriorityFilter !== "all" && task.priority !== currentPriorityFilter) return false;
+
+    if (currentSearch !== "") {
+      const searchText = currentSearch.toLowerCase();
+      const titleMatches = task.title.toLowerCase().includes(searchText);
+      const descriptionMatches = task.description.toLowerCase().includes(searchText);
+
+      if (!titleMatches && !descriptionMatches) return false;
+    }
+
     return true;
   });
 }
+
 
 const statusFilterButtons = document.querySelectorAll("[data-status-filter]");
 
@@ -280,7 +295,27 @@ function updateFilterButtons() {
     button.classList.toggle("active", isActive);
     button.setAttribute("aria-pressed", isActive);
   });
+
+  priorityFilterButtons.forEach(button => {
+    const isActive = button.dataset.priorityFilter === currentPriorityFilter;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", isActive);
+  });
 }
+
+const priorityFilterButtons = document.querySelectorAll("[data-priority-filter]");
+
+priorityFilterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    currentPriorityFilter = button.dataset.priorityFilter;
+    applyFilters();
+  });
+});
+
+taskSearchInput.addEventListener("input", () => {
+  currentSearch = taskSearchInput.value.trim();
+  applyFilters();
+});
 
 
 function applyFilters() {
