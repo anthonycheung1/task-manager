@@ -259,3 +259,51 @@ select {
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
+
+
+/* --------------------------------------------------
+   Status filters
+-------------------------------------------------- */
+
+.filters-section {
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.filter-group {
+  margin-top: 1rem;
+}
+
+.filter-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-button {
+  border: 1px solid #c7cdd4;
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.filter-button.active {
+  background-color: #1f4e79;
+  border-color: #1f4e79;
+  color: #ffffff;
+}
+
+.results-count {
+  color: #666666;
+  font-size: 0.9rem;
+}

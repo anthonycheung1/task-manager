@@ -75,6 +75,8 @@ function formatDate(dateString) {
 
 let editingTaskId = null;
 
+let currentStatusFilter = "all";
+
 // --------------------------------------------------
 // Render tasks
 // --------------------------------------------------
@@ -254,13 +256,41 @@ function updateSummary() {
   dueTodayCountElement.textContent = dueTodayTasks.length;
 }
 
+function getFilteredTasks() {
+  return tasks.filter(task => {
+    if (currentStatusFilter === "active" && task.completed) return false;
+    if (currentStatusFilter === "completed" && !task.completed) return false;
+    if (currentStatusFilter === "due-today" && (task.dueDate !== getToday() || task.completed)) return false;
+    return true;
+  });
+}
+
+const statusFilterButtons = document.querySelectorAll("[data-status-filter]");
+
+statusFilterButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    currentStatusFilter = button.dataset.statusFilter;
+    applyFilters();
+  });
+});
+
+function updateFilterButtons() {
+  statusFilterButtons.forEach(button => {
+    const isActive = button.dataset.statusFilter === currentStatusFilter;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", isActive);
+  });
+}
+
 
 function applyFilters() {
-  updateSummary();
-  renderTasks(tasks);
+  const filteredTasks = getFilteredTasks();
 
-  resultsCountElement.textContent =
-    tasks.length === 1 ? "1 task" : `${tasks.length} tasks`;
+  updateSummary();
+  updateFilterButtons();
+  renderTasks(filteredTasks);
+
+  resultsCountElement.textContent = filteredTasks.length === 1 ? "1 task" : `${filteredTasks.length} tasks`;
 }
 
 // --------------------------------------------------
