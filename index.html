@@ -20,10 +20,11 @@
   </header>
 
   <main class="main-content">
+    <div id="user-feedback" class="user-feedback" role="status" aria-live="polite"></div>
     <div class="dashboard-layout">
       <aside class="sidebar">
-        <section class="summary-section">
-          <h2>Task Summary</h2>
+        <section class="summary-section" aria-labelledby="summary-heading">
+          <h2 id="summary-heading">Task Summary</h2>
           <div class="summary-cards">
             <article class="summary-card">
               <span class="summary-number" id="active-count">0</span>
@@ -72,43 +73,51 @@
         </section>
       </aside>
 
-      <section class="task-content">
+      <section class="task-content" aria-labelledby="tasks-heading">
         <div class="task-content-header">
           <div>
-            <h2>My Tasks</h2>
+            <h2 id="tasks-heading">My Tasks</h2>
             <p id="results-count" class="results-count"></p>
           </div>
         </div>
 
-        <section class="filters-section">
-          <h3>Filter Tasks</h3>
+        <section class="filters-section" aria-labelledby="filters-heading">
+          <h3 id="filters-heading">Filter Tasks</h3>
           <div class="filter-group">
             <span class="filter-label">Status</span>
             <div class="filter-buttons">
-              <button type="button" class="filter-button active" data-status-filter="all">All</button>
-              <button type="button" class="filter-button" data-status-filter="active">Active</button>
-              <button type="button" class="filter-button" data-status-filter="completed">Completed</button>
-              <button type="button" class="filter-button" data-status-filter="due-today">Due Today</button>
+              <button type="button" class="filter-button active" data-status-filter="all"
+                aria-pressed="true">All</button>
+              <button type="button" class="filter-button" data-status-filter="active"
+                aria-pressed="false">Active</button>
+              <button type="button" class="filter-button" data-status-filter="completed"
+                aria-pressed="false">Completed</button>
+              <button type="button" class="filter-button" data-status-filter="due-today" aria-pressed="false">Due
+                Today</button>
             </div>
           </div>
 
           <div class="filter-group">
             <span class="filter-label">Priority</span>
             <div class="filter-buttons">
-              <button type="button" class="filter-button active" data-priority-filter="all">All</button>
-              <button type="button" class="filter-button" data-priority-filter="low">Low</button>
-              <button type="button" class="filter-button" data-priority-filter="medium">Medium</button>
-              <button type="button" class="filter-button" data-priority-filter="high">High</button>
+              <button type="button" class="filter-button active" data-priority-filter="all"
+                aria-pressed="true">All</button>
+              <button type="button" class="filter-button" data-priority-filter="low" aria-pressed="false">Low</button>
+              <button type="button" class="filter-button" data-priority-filter="medium"
+                aria-pressed="false">Medium</button>
+              <button type="button" class="filter-button" data-priority-filter="high" aria-pressed="false">High</button>
             </div>
           </div>
           <div class="search-group">
             <label for="task-search">Search tasks</label>
-            <input type="search" id="task-search" placeholder="Search by title or description...">
+            <input type="search" id="task-search" aria-describedby="search-help"
+              placeholder="Search by title or description...">
           </div>
 
         </section>
 
-        <section class="task-list-section">
+        <section class="task-list-section" aria-labelledby="task-list-heading">
+          <h3 id="task-list-heading" class="visually-hidden">Task List</h3>
           <div id="task-list-container"></div>
         </section>
       </section>
