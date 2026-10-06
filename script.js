@@ -80,6 +80,15 @@ let currentStatusFilter = "all";
 let currentPriorityFilter = "all";
 let currentSearch = "";
 
+const tasksKey = "tasksKey";
+const storedTasks = localStorage.getItem(tasksKey);
+
+tasks = storedTasks ? JSON.parse(storedTasks) : defaultTasks;
+
+function saveTasks() {
+  localStorage.setItem(tasksKey, JSON.stringify(tasks));
+}
+
 // --------------------------------------------------
 // Render tasks
 // --------------------------------------------------
@@ -181,6 +190,7 @@ taskForm.addEventListener("submit", event => {
       task.dueDate = dueDate;
       task.priority = priority;
     }
+    saveTasks();
 
   } else {
     const newTask = {
@@ -193,6 +203,7 @@ taskForm.addEventListener("submit", event => {
     };
 
     tasks.push(newTask);
+    saveTasks();
 
   }
   taskForm.reset();
@@ -233,6 +244,7 @@ function deleteTask(taskId) {
   }
 
   tasks = tasks.filter(item => item.id !== taskId);
+  saveTasks();
 
   applyFilters();
 }
@@ -246,6 +258,7 @@ function toggleTask(taskId) {
   }
 
   task.completed = !task.completed;
+  saveTasks();
   applyFilters();
 }
 
@@ -325,7 +338,8 @@ function applyFilters() {
   updateFilterButtons();
   renderTasks(filteredTasks);
 
-  resultsCountElement.textContent = filteredTasks.length === 1 ? "1 task" : `${filteredTasks.length} tasks`;
+  resultsCountElement.textContent =
+    filteredTasks.length === 1 ? "1 task" : `${filteredTasks.length} tasks`;
 }
 
 // --------------------------------------------------
