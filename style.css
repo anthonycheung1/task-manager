@@ -361,3 +361,57 @@ select {
   background-color: #aeb7c1;
   cursor: not-allowed;
 }
+
+
+/* --------------------------------------------------
+   Responsive design
+-------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .main-content {
+    width: min(100% - 1.5rem, 1100px);
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .form-buttons,
+  .task-actions {
+    flex-direction: column;
+  }
+
+  .task-actions button {
+    width: 100%;
+  }
+
+  .task-header {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 320px) {
+  .filter-buttons {
+    flex-direction: column;
+  }
+
+  .filter-button {
+    width: 100%;
+  }
+}
