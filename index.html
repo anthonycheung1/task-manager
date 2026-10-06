@@ -13,9 +13,8 @@
     <div class="header-content">
       <p class="eyebrow">Productivity Dashboard</p>
       <h1>My Task Manager</h1>
-      <p class="header-description">
-        Organise your tasks, track progress and stay on top of your deadlines.
-      </p>
+      <p class="header-description">Organise your tasks, track progress and stay on top of your deadlines.</p>
+      <p id="current-date" class="current-date"></p>
     </div>
   </header>
 
@@ -26,48 +25,42 @@
         <section class="summary-section" aria-labelledby="summary-heading">
           <h2 id="summary-heading">Task Summary</h2>
           <div class="summary-cards">
-            <article class="summary-card">
-              <span class="summary-number" id="active-count">0</span>
-              <span class="summary-label">Active</span>
-            </article>
-            <article class="summary-card">
-              <span class="summary-number" id="completed-count">0</span>
-              <span class="summary-label">Completed</span>
-            </article>
-            <article class="summary-card">
-              <span class="summary-number" id="due-today-count">0</span>
-              <span class="summary-label">Due Today</span>
-            </article>
+            <article class="summary-card"><span class="summary-number" id="active-count">0</span><span
+                class="summary-label">Active</span></article>
+            <article class="summary-card"><span class="summary-number" id="completed-count">0</span><span
+                class="summary-label">Completed</span></article>
+            <article class="summary-card"><span class="summary-number" id="due-today-count">0</span><span
+                class="summary-label">Due Today</span></article>
           </div>
         </section>
 
-        <section class="task-form-section">
-          <h2>Add a Task</h2>
+        <section class="task-form-section" aria-labelledby="form-heading">
+          <h2 id="form-heading">Add a Task</h2>
           <form id="task-form">
             <div class="form-group">
               <label for="task-title">Task title <span class="field-description">Required</span></label>
-              <input type="text" id="task-title" maxlength="100" required autocomplete="off"
+              <input type="text" id="task-title" name="task-title" maxlength="100" required autocomplete="off"
                 placeholder="e.g. Finish JavaScript project">
             </div>
             <div class="form-group">
               <label for="task-description">Description <span class="field-description">Optional</span></label>
-              <textarea id="task-description" maxlength="500" rows="4"
+              <textarea id="task-description" name="task-description" maxlength="500" rows="4"
                 placeholder="Add some details about the task..."></textarea>
             </div>
             <div class="form-group">
               <label for="task-due-date">Due date</label>
-              <input type="date" id="task-due-date" required>
+              <input type="date" id="task-due-date" name="task-due-date" required>
             </div>
             <div class="form-group">
               <label for="task-priority">Priority</label>
-              <select id="task-priority">
+              <select id="task-priority" name="task-priority">
                 <option value="low">Low</option>
                 <option value="medium" selected>Medium</option>
                 <option value="high">High</option>
               </select>
             </div>
             <div class="form-buttons">
-              <button type="submit" id="submit-task-button" class="primary-button">Add Task</button>
+              <button type="submit" id="submit-task-button" class="primary-button" disabled>Add Task</button>
               <button type="button" id="cancel-task-button" class="secondary-button">Cancel</button>
             </div>
           </form>
@@ -86,7 +79,7 @@
           <h3 id="filters-heading">Filter Tasks</h3>
           <div class="filter-group">
             <span class="filter-label">Status</span>
-            <div class="filter-buttons">
+            <div class="filter-buttons" role="group" aria-label="Filter tasks by status">
               <button type="button" class="filter-button active" data-status-filter="all"
                 aria-pressed="true">All</button>
               <button type="button" class="filter-button" data-status-filter="active"
@@ -97,10 +90,9 @@
                 Today</button>
             </div>
           </div>
-
           <div class="filter-group">
             <span class="filter-label">Priority</span>
-            <div class="filter-buttons">
+            <div class="filter-buttons" role="group" aria-label="Filter tasks by priority">
               <button type="button" class="filter-button active" data-priority-filter="all"
                 aria-pressed="true">All</button>
               <button type="button" class="filter-button" data-priority-filter="low" aria-pressed="false">Low</button>
@@ -111,14 +103,12 @@
           </div>
           <div class="search-group">
             <label for="task-search">Search tasks</label>
-            <input type="search" id="task-search" aria-describedby="search-help"
-              placeholder="Search by title or description...">
+            <input type="search" id="task-search" name="task-search" placeholder="Search by title or description..."
+              autocomplete="off" aria-describedby="search-help">
             <p id="search-help" class="search-help">Search your task titles and descriptions.</p>
           </div>
-
-          <div id="active-filter-summary" class="active-filter-summary"></div>
+          <div id="active-filter-summary" class="active-filter-summary" aria-live="polite"></div>
           <button type="button" id="clear-filters-button" class="clear-filters-button" hidden>Clear Filters</button>
-
         </section>
 
         <section class="task-list-section" aria-labelledby="task-list-heading">
@@ -132,7 +122,6 @@
   <footer class="page-footer">
     <p>My Task Manager &copy; 2026</p>
   </footer>
-
   <script src="script.js"></script>
 </body>
 
